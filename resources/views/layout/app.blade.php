@@ -40,7 +40,7 @@
 
 <body>
 
-    <nav class="navbar navbar-expand-lg">
+    {{-- <nav class="navbar navbar-expand-lg">
 
         <div class="container">
 
@@ -69,9 +69,9 @@
 
             </div> --}}
 
-        </div>
+        {{-- </div> --}}
 
-    </nav>
+    {{-- </nav> --}} 
 
     <div class="container mt-5">
 

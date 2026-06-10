@@ -5,7 +5,7 @@ use App\Http\Controllers\DiagnosaController;
 
 /*
 |--------------------------------------------------------------------------
-| HALAMAN LOGIN
+| HALAMAN AWAL
 |--------------------------------------------------------------------------
 */
 
@@ -22,7 +22,9 @@ Route::get('/', function () {
 */
 
 /*
+|--------------------------------------------------------------------------
 | Form Data Diri
+|--------------------------------------------------------------------------
 */
 
 Route::get('/user', function () {
@@ -32,7 +34,10 @@ Route::get('/user', function () {
 });
 
 /*
-| Simpan data diri + tampil pertanyaan pertama
+|--------------------------------------------------------------------------
+| Simpan Data Diri
+| Tampilkan Pertanyaan Pertama
+|--------------------------------------------------------------------------
 */
 
 Route::post(
@@ -41,16 +46,20 @@ Route::post(
 );
 
 /*
-| Next pertanyaan diagnosa
+|--------------------------------------------------------------------------
+| Next Pertanyaan Diagnosa
+|--------------------------------------------------------------------------
 */
 
 Route::post(
-    '/diagnosa/next',
+    '/next-diagnosa',
     [DiagnosaController::class, 'next']
 );
 
 /*
-| Halaman hasil diagnosa
+|--------------------------------------------------------------------------
+| Halaman Hasil Diagnosa
+|--------------------------------------------------------------------------
 */
 
 Route::get(
@@ -68,4 +77,4 @@ Route::get('/admin', function () {
 
     return view('admin.dashboard');
 
-});
+}); 

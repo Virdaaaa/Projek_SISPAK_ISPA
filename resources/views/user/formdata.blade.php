@@ -1,166 +1,547 @@
-php
 @extends('layout.app')
 
 @section('content')
 
-<div class="card p-5">
+<style>
 
-    <h2 class="mb-4">
+    body{
 
-        Form Data Diri Pasien
+        background:
+            linear-gradient(
+                rgba(10,20,40,0.78),
+                rgba(10,20,40,0.78)
+            ),
 
-    </h2>
+            url('https://images.unsplash.com/photo-1584515933487-779824d29309?q=80&w=2070&auto=format&fit=crop');
 
-    <form action="/diagnosa"
-          method="POST">
+        background-size: cover;
 
-        @csrf
+        background-position: center;
 
-        <div class="row">
+        min-height: 100vh;
+    }
 
-            <!-- Nama -->
+    .main-card{
 
-            <div class="col-md-6 mb-3">
+        background:
+            rgba(255,255,255,0.10);
 
-                <label class="form-label">
+        backdrop-filter: blur(14px);
 
-                    Nama Lengkap
+        border:
+            1px solid rgba(255,255,255,0.10);
 
-                </label>
+        border-radius: 35px;
 
-                <input type="text"
-                       class="form-control"
-                       name="nama"
-                       required>
+        overflow: hidden;
+
+        box-shadow:
+            0 20px 60px rgba(0,0,0,0.35);
+    }
+
+    .left-side{
+
+        padding: 60px;
+
+        color: white;
+
+        height: 100%;
+    }
+
+    .step-badge{
+
+        display: inline-block;
+
+        padding:
+            10px 22px;
+
+        border-radius: 999px;
+
+        background:
+            rgba(255,255,255,0.12);
+
+        margin-bottom: 30px;
+
+        font-size: 14px;
+    }
+
+    .main-title{
+
+        font-size: 54px;
+
+        font-weight: 700;
+
+        line-height: 1.2;
+    }
+
+    .main-title span{
+
+        color: #7dc4ff;
+    }
+
+    .desc{
+
+        margin-top: 25px;
+
+        color:
+            rgba(255,255,255,0.8);
+
+        line-height: 1.9;
+
+        font-size: 17px;
+    }
+
+    .feature{
+
+        margin-top: 18px;
+
+        font-size: 17px;
+    }
+
+    .doctor-image{
+
+        width: 100%;
+
+        max-width: 340px;
+
+        margin-top: 40px;
+
+        animation:
+            float 3s ease-in-out infinite;
+
+        filter:
+            drop-shadow(
+                0 0 35px rgba(125,196,255,0.25)
+            );
+    }
+
+    @keyframes float{
+
+        0%{
+            transform: translateY(0px);
+        }
+
+        50%{
+            transform: translateY(-10px);
+        }
+
+        100%{
+            transform: translateY(0px);
+        }
+    }
+
+    .right-side{
+
+        background:
+            rgba(255,255,255,0.95);
+
+        padding: 60px;
+    }
+
+    .form-title{
+
+        font-size: 42px;
+
+        font-weight: 700;
+
+        margin-bottom: 10px;
+
+        color: #111827;
+    }
+
+    .form-subtitle{
+
+        color: #6b7280;
+
+        margin-bottom: 40px;
+    }
+
+    .form-label{
+
+        font-weight: 600;
+
+        margin-bottom: 10px;
+
+        color: #374151;
+    }
+
+    .form-control,
+    .form-select{
+
+        height: 58px;
+
+        border-radius: 18px;
+
+        border:
+            1px solid #dbe3ee;
+
+        padding-left: 20px;
+
+        font-size: 16px;
+
+        transition: 0.3s;
+    }
+
+    textarea.form-control{
+
+        height: auto;
+
+        padding-top: 15px;
+    }
+
+    .form-control:focus,
+    .form-select:focus{
+
+        border-color: #60a5fa;
+
+        box-shadow:
+            0 0 0 5px rgba(96,165,250,0.18);
+    }
+
+    .btn-next{
+
+        width: 100%;
+
+        height: 60px;
+
+        border: none;
+
+        border-radius: 18px;
+
+        background: #1f6fff;
+
+        color: white;
+
+        font-size: 18px;
+
+        font-weight: 600;
+
+        transition: 0.3s;
+    }
+
+    .btn-next:hover{
+
+        background: #0f5ae0;
+
+        transform:
+            translateY(-3px);
+
+        box-shadow:
+            0 12px 25px rgba(31,111,255,0.25);
+    }
+
+    .progress-wrapper{
+
+        margin-bottom: 35px;
+    }
+
+    .progress{
+
+        height: 10px;
+
+        border-radius: 999px;
+
+        overflow: hidden;
+
+        background: #e5e7eb;
+    }
+
+    .progress-bar{
+
+        width: 33%;
+
+        background:
+            linear-gradient(
+                90deg,
+                #1f6fff,
+                #7dc4ff
+            );
+    }
+
+    @media(max-width: 992px){
+
+        .left-side{
+
+            display: none;
+        }
+
+        .right-side{
+
+            padding: 35px;
+        }
+
+        .form-title{
+
+            font-size: 34px;
+        }
+    }
+
+</style>
+
+<div class="container py-5">
+
+    <div class="main-card">
+
+        <div class="row g-0">
+
+            <!-- LEFT -->
+
+            <div class="col-lg-5">
+
+                <div class="left-side">
+
+                    <div class="step-badge">
+
+                        Sistem Pakar Diagnosis ISPA
+
+                    </div>
+
+                    <div class="main-title">
+
+                        Form <span>Data Diri</span>
+                        Pasien
+
+                    </div>
+
+                    <div class="desc">
+
+                        Silakan lengkapi data diri pasien
+                        sebelum memulai proses diagnosis
+                        penyakit ISPA menggunakan metode
+                        Forward Chaining dan Certainty Factor.
+
+                    </div>
+
+                    <div class="mt-4">
+
+                        <div class="feature">
+                            ✔ Diagnosa Cepat dan Interaktif
+                        </div>
+
+                        <div class="feature">
+                            ✔ Perhitungan Tingkat Keyakinan
+                        </div>
+
+                        <div class="feature">
+                            ✔ Berbasis Knowledge Base
+                        </div>
+
+                        <div class="feature">
+                            ✔ Hasil Akurat dan Modern
+                        </div>
+
+                    </div>
+
+                    <img
+                        src="https://cdn-icons-png.flaticon.com/512/2785/2785544.png"
+                        class="doctor-image">
+
+                </div>
 
             </div>
 
-            <!-- Jenis Kelamin -->
+            <!-- RIGHT -->
 
-            <div class="col-md-6 mb-3">
+            <div class="col-lg-7">
 
-                <label class="form-label">
+                <div class="right-side">
 
-                    Jenis Kelamin
+                    <div class="progress-wrapper">
 
-                </label>
+                        <div class="d-flex justify-content-between mb-2">
 
-                <select class="form-control"
-                        name="jk"
-                        required>
+                            <small>
+                                Step 1 of 3
+                            </small>
 
-                    <option value="">
-                        -- Pilih --
-                    </option>
+                            <small>
+                                Data Diri Pasien
+                            </small>
 
-                    <option value="Laki-Laki">
-                        Laki-Laki
-                    </option>
+                        </div>
 
-                    <option value="Perempuan">
-                        Perempuan
-                    </option>
+                        <div class="progress">
 
-                </select>
+                            <div class="progress-bar"></div>
 
-            </div>
+                        </div>
 
-            <!-- Tempat Lahir -->
+                    </div>
 
-            <div class="col-md-6 mb-3">
+                    <div class="form-title">
 
-                <label class="form-label">
+                        Lengkapi Data Diri
 
-                    Tempat Lahir
+                    </div>
 
-                </label>
+                    <div class="form-subtitle">
 
-                <input type="text"
-                       class="form-control"
-                       name="tempat_lahir"
-                       required>
+                        Pastikan data yang dimasukkan sudah benar.
 
-            </div>
+                    </div>
 
-            <!-- Tanggal Lahir -->
+                    <form action="/diagnosa"
+                          method="POST">
 
-            <div class="col-md-6 mb-3">
+                        @csrf
 
-                <label class="form-label">
+                        <div class="row">
 
-                    Tanggal Lahir
+                            <!-- Nama -->
 
-                </label>
+                            <div class="col-md-6 mb-4">
 
-                <input type="date"
-                       class="form-control"
-                       name="tanggal_lahir"
-                       required>
+                                <label class="form-label">
 
-            </div>
+                                    Nama Lengkap
 
-            <!-- Tinggi Badan -->
+                                </label>
 
-            <div class="col-md-6 mb-3">
+                                <input type="text"
+                                       class="form-control"
+                                       name="nama"
+                                       placeholder="Masukkan nama lengkap"
+                                       required>
 
-                <label class="form-label">
+                            </div>
 
-                    Tinggi Badan (cm)
+                            <!-- Jenis Kelamin -->
 
-                </label>
+                            <div class="col-md-6 mb-4">
 
-                <input type="number"
-                       class="form-control"
-                       name="tinggi_badan"
-                       required>
+                                <label class="form-label">
 
-            </div>
+                                    Jenis Kelamin
 
-            <!-- Berat Badan -->
+                                </label>
 
-            <div class="col-md-6 mb-3">
+                                <select class="form-select"
+                                        name="jk"
+                                        required>
 
-                <label class="form-label">
+                                    <option value="">
+                                        -- Pilih --
+                                    </option>
 
-                    Berat Badan (kg)
+                                    <option value="Laki-Laki">
+                                        Laki-Laki
+                                    </option>
 
-                </label>
+                                    <option value="Perempuan">
+                                        Perempuan
+                                    </option>
 
-                <input type="number"
-                       class="form-control"
-                       name="berat_badan"
-                       required>
+                                </select>
 
-            </div>
+                            </div>
 
-            <!-- Alamat -->
+                            <!-- Tempat Lahir -->
 
-            <div class="col-md-12 mb-3">
+                            <div class="col-md-6 mb-4">
 
-                <label class="form-label">
+                                <label class="form-label">
 
-                    Alamat Rumah
+                                    Tempat Lahir
 
-                </label>
+                                </label>
 
-                <textarea class="form-control"
-                          rows="3"
-                          name="alamat"
-                          required></textarea>
+                                <input type="text"
+                                       class="form-control"
+                                       name="tempat_lahir"
+                                       placeholder="Contoh: Yogyakarta"
+                                       required>
+
+                            </div>
+
+                            <!-- Tanggal Lahir -->
+
+                            <div class="col-md-6 mb-4">
+
+                                <label class="form-label">
+
+                                    Tanggal Lahir
+
+                                </label>
+
+                                <input type="date"
+                                       class="form-control"
+                                       name="tanggal_lahir"
+                                       required>
+
+                            </div>
+
+                            <!-- Tinggi Badan -->
+
+                            <div class="col-md-6 mb-4">
+
+                                <label class="form-label">
+
+                                    Tinggi Badan (cm)
+
+                                </label>
+
+                                <input type="number"
+                                       class="form-control"
+                                       name="tinggi_badan"
+                                       placeholder="Contoh: 170"
+                                       required>
+
+                            </div>
+
+                            <!-- Berat Badan -->
+
+                            <div class="col-md-6 mb-4">
+
+                                <label class="form-label">
+
+                                    Berat Badan (kg)
+
+                                </label>
+
+                                <input type="number"
+                                       class="form-control"
+                                       name="berat_badan"
+                                       placeholder="Contoh: 55"
+                                       required>
+
+                            </div>
+
+                            <!-- Alamat -->
+
+                            <div class="col-md-12 mb-4">
+
+                                <label class="form-label">
+
+                                    Alamat Rumah
+
+                                </label>
+
+                                <textarea class="form-control"
+                                          rows="4"
+                                          name="alamat"
+                                          placeholder="Masukkan alamat lengkap"
+                                          required></textarea>
+
+                            </div>
+
+                        </div>
+
+                        <button class="btn-next">
+
+                            Lanjutkan Diagnosis →
+
+                        </button>
+
+                    </form>
+
+                </div>
 
             </div>
 
         </div>
 
-        <button class="btn btn-primary">
-
-            Next
-
-        </button>
-
-    </form>
+    </div>
 
 </div>
 
 @endsection
-

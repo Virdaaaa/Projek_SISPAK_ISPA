@@ -31,6 +31,31 @@ class PenyakitSeeder extends Seeder
                 'nama_penyakit' => 'Pneumonia'
             ],
 
+            [
+                'kode_penyakit' => 'P005',
+                'nama_penyakit' => 'Faringitis'
+            ],
+
+            [
+                'kode_penyakit' => 'P006',
+                'nama_penyakit' => 'Epiglotitis'
+            ],
+
+            [
+                'kode_penyakit' => 'P007',
+                'nama_penyakit' => 'Pleuritis'
+            ],
+
+            [
+                'kode_penyakit' => 'P008',
+                'nama_penyakit' => 'Common Cold'
+            ],
+
+            [
+                'kode_penyakit' => 'P009',
+                'nama_penyakit' => 'ILI (Influenza Like Illness) '
+            ],
+
         ]);
     }
 }
