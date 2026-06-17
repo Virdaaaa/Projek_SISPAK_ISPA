@@ -1,507 +1,504 @@
-@extends('layout.app')
+<!DOCTYPE html>
+<html lang="en">
 
-@section('content')
+<head>
 
-<style>
+    <meta charset="UTF-8">
 
-    body{
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
 
-        background:
-            linear-gradient(
-                rgba(8,15,35,0.88),
-                rgba(8,15,35,0.88)
-            ),
+    <title>Hasil Diagnosa ISPA</title>
 
-            url('https://images.unsplash.com/photo-1584515933487-779824d29309?q=80&w=2070&auto=format&fit=crop');
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+          rel="stylesheet">
 
-        background-size: cover;
+    <link rel="preconnect"
+          href="https://fonts.googleapis.com">
 
-        background-position: center;
+    <link rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossorigin>
 
-        min-height: 100vh;
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet">
 
-        font-family: 'Poppins', sans-serif;
+    <style>
 
-        padding:
-            50px 20px;
-    }
+        *{
+            font-family: 'Poppins', sans-serif;
+        }
 
-    .result-wrapper{
+        body{
 
-        max-width: 1200px;
+            min-height: 100vh;
 
-        margin: auto;
-    }
+            background:
+                linear-gradient(
+                    rgba(8,15,35,0.92),
+                    rgba(8,15,35,0.92)
+                ),
 
-    .glass-card{
+                url('https://images.unsplash.com/photo-1584515933487-779824d29309?q=80&w=2070&auto=format&fit=crop');
 
-        background:
-            rgba(255,255,255,0.10);
+            background-size: cover;
 
-        backdrop-filter: blur(18px);
+            background-position: center;
 
-        border:
-            1px solid rgba(255,255,255,0.12);
+            padding: 40px 20px;
+        }
 
-        border-radius: 30px;
+        .main-card{
 
-        box-shadow:
-            0 20px 60px rgba(0,0,0,0.35);
+            max-width: 1250px;
 
-        overflow: hidden;
-    }
+            margin: auto;
 
-    .hero-section{
+            background:
+                rgba(255,255,255,0.08);
 
-        padding:
-            60px;
+            backdrop-filter: blur(15px);
 
-        position: relative;
-    }
+            border:
+                1px solid rgba(255,255,255,0.1);
 
-    .hero-section::before{
+            border-radius: 35px;
 
-        content: '';
+            overflow: hidden;
 
-        position: absolute;
+            box-shadow:
+                0 20px 60px rgba(0,0,0,0.35);
+        }
 
-        width: 320px;
+        .top-section{
 
-        height: 320px;
+            padding: 45px;
+        }
 
-        background:
-            rgba(125,196,255,0.15);
+        .tag{
 
-        border-radius: 50%;
+            display: inline-block;
 
-        top: -100px;
+            padding:
+                10px 20px;
 
-        right: -100px;
+            border-radius: 999px;
 
-        filter: blur(80px);
-    }
+            background:
+                rgba(255,255,255,0.12);
 
-    .badge-modern{
+            color: white;
 
-        display: inline-block;
+            font-size: 14px;
 
-        background:
-            rgba(255,255,255,0.12);
-
-        color: white;
-
-        padding:
-            10px 20px;
-
-        border-radius: 999px;
-
-        font-size: 14px;
-
-        margin-bottom: 25px;
-    }
-
-    .title{
-
-        color: white;
-
-        font-size: 48px;
-
-        font-weight: 700;
-
-        margin-bottom: 10px;
-    }
-
-    .subtitle{
-
-        color:
-            rgba(255,255,255,0.75);
-
-        font-size: 18px;
-
-        margin-bottom: 50px;
-    }
-
-    .result-card{
-
-        background:
-            rgba(255,255,255,0.08);
-
-        border:
-            1px solid rgba(255,255,255,0.12);
-
-        border-radius: 30px;
-
-        padding:
-            40px;
-
-        text-align: center;
-
-        position: relative;
-
-        overflow: hidden;
-    }
-
-    .result-card::before{
-
-        content: '';
-
-        position: absolute;
-
-        width: 250px;
-
-        height: 250px;
-
-        background:
-            rgba(59,130,246,0.18);
-
-        border-radius: 50%;
-
-        top: -80px;
-
-        right: -80px;
-
-        filter: blur(70px);
-    }
-
-    .diagnosa-icon{
-
-        font-size: 70px;
-
-        margin-bottom: 20px;
-    }
-
-    .penyakit-name{
-
-        color: white;
-
-        font-size: 40px;
-
-        font-weight: 700;
-
-        margin-bottom: 15px;
-    }
-
-    .persen{
-
-        font-size: 90px;
-
-        font-weight: 700;
-
-        background:
-            linear-gradient(
-                90deg,
-                #60a5fa,
-                #7dd3fc
-            );
-
-        -webkit-background-clip: text;
-
-        -webkit-text-fill-color: transparent;
-
-        line-height: 1;
-    }
-
-    .status{
-
-        display: inline-block;
-
-        margin-top: 20px;
-
-        background:
-            rgba(34,197,94,0.15);
-
-        color: #4ade80;
-
-        padding:
-            10px 22px;
-
-        border-radius: 999px;
-
-        font-weight: 600;
-    }
-
-    .section-card{
-
-        background:
-            rgba(255,255,255,0.08);
-
-        border:
-            1px solid rgba(255,255,255,0.10);
-
-        border-radius: 25px;
-
-        padding:
-            30px;
-
-        margin-top: 30px;
-    }
-
-    .section-title{
-
-        color: white;
-
-        font-size: 28px;
-
-        font-weight: 600;
-
-        margin-bottom: 25px;
-    }
-
-    .tag-gejala{
-
-        display: inline-block;
-
-        background:
-            rgba(59,130,246,0.15);
-
-        color: #93c5fd;
-
-        border:
-            1px solid rgba(147,197,253,0.25);
-
-        padding:
-            12px 20px;
-
-        border-radius: 999px;
-
-        margin:
-            8px;
-
-        font-size: 15px;
-    }
-
-    .solusi-box{
-
-        background:
-            rgba(255,255,255,0.05);
-
-        border-radius: 20px;
-
-        padding:
-            25px;
-
-        color:
-            rgba(255,255,255,0.85);
-
-        line-height: 2;
-
-        font-size: 16px;
-    }
-
-    .ranking-card{
-
-        background:
-            rgba(255,255,255,0.06);
-
-        border:
-            1px solid rgba(255,255,255,0.08);
-
-        border-radius: 22px;
-
-        padding:
-            25px;
-
-        margin-bottom: 20px;
-
-        transition: 0.3s;
-    }
-
-    .ranking-card:hover{
-
-        transform:
-            translateY(-5px);
-
-        background:
-            rgba(59,130,246,0.12);
-    }
-
-    .ranking-top{
-
-        display: flex;
-
-        justify-content: space-between;
-
-        align-items: center;
-
-        margin-bottom: 15px;
-    }
-
-    .ranking-name{
-
-        color: white;
-
-        font-size: 22px;
-
-        font-weight: 600;
-    }
-
-    .ranking-percent{
-
-        color: #7dd3fc;
-
-        font-size: 24px;
-
-        font-weight: 700;
-    }
-
-    .progress-modern{
-
-        height: 12px;
-
-        background:
-            rgba(255,255,255,0.08);
-
-        border-radius: 999px;
-
-        overflow: hidden;
-    }
-
-    .progress-modern div{
-
-        height: 100%;
-
-        background:
-            linear-gradient(
-                90deg,
-                #3b82f6,
-                #7dd3fc
-            );
-
-        border-radius: 999px;
-    }
-
-    .btn-modern{
-
-        border-radius: 18px;
-
-        padding:
-            14px 28px;
-
-        font-weight: 600;
-
-        font-size: 16px;
-
-        transition: 0.3s;
-    }
-
-    .btn-modern:hover{
-
-        transform:
-            translateY(-4px);
-    }
-
-    @media(max-width: 768px){
-
-        .hero-section{
-
-            padding: 30px;
+            margin-bottom: 25px;
         }
 
         .title{
 
-            font-size: 35px;
+            color: white;
+
+            font-size: 55px;
+
+            font-weight: 700;
+
+            line-height: 1.2;
+        }
+
+        .subtitle{
+
+            color: rgba(255,255,255,0.75);
+
+            margin-top: 18px;
+
+            font-size: 18px;
+
+            line-height: 1.8;
+        }
+
+        .prediction-grid{
+
+            display: grid;
+
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+
+            gap: 25px;
+
+            margin-top: 45px;
+        }
+
+        .prediction-card{
+
+            background:
+                rgba(255,255,255,0.08);
+
+            border:
+                1px solid rgba(255,255,255,0.12);
+
+            border-radius: 30px;
+
+            padding: 35px;
+
+            position: relative;
+
+            overflow: hidden;
+        }
+
+        .prediction-card::before{
+
+            content: '';
+
+            position: absolute;
+
+            width: 220px;
+
+            height: 220px;
+
+            background:
+                rgba(125,196,255,0.08);
+
+            border-radius: 50%;
+
+            top: -50px;
+
+            right: -50px;
+
+            filter: blur(20px);
+        }
+
+        .ranking{
+
+            width: 55px;
+
+            height: 55px;
+
+            border-radius: 18px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-weight: 700;
+
+            font-size: 24px;
+
+            color: white;
+
+            margin-bottom: 25px;
+        }
+
+        .rank-1{
+
+            background:
+                linear-gradient(135deg,#4facfe,#00f2fe);
+        }
+
+        .rank-2{
+
+            background:
+                linear-gradient(135deg,#8e2de2,#4a00e0);
+        }
+
+        .penyakit{
+
+            color: white;
+
+            font-size: 38px;
+
+            font-weight: 700;
+
+            margin-bottom: 10px;
         }
 
         .persen{
 
-            font-size: 60px;
+            font-size: 75px;
+
+            font-weight: 700;
+
+            color: #74c0ff;
+
+            line-height: 1;
         }
 
-        .penyakit-name{
+        .status{
 
-            font-size: 30px;
+            display: inline-block;
+
+            margin-top: 20px;
+
+            padding:
+                10px 20px;
+
+            border-radius: 999px;
+
+            font-size: 14px;
+
+            font-weight: 600;
         }
-    }
 
-</style>
+        .tinggi{
 
-<div class="result-wrapper">
+            background:
+                rgba(40,167,69,0.2);
 
-    <div class="glass-card">
+            color: #6dff8f;
+        }
 
-        <div class="hero-section">
+        .sedang{
 
-            <div class="badge-modern">
+            background:
+                rgba(255,193,7,0.18);
 
-                Sistem Pakar Diagnosis ISPA
+            color: #ffd65a;
+        }
+
+        .rendah{
+
+            background:
+                rgba(220,53,69,0.18);
+
+            color: #ff7c8d;
+        }
+
+        .section-card{
+
+            margin-top: 30px;
+
+            background:
+                rgba(255,255,255,0.08);
+
+            border:
+                1px solid rgba(255,255,255,0.1);
+
+            border-radius: 30px;
+
+            padding: 35px;
+        }
+
+        .section-title{
+
+            color: white;
+
+            font-size: 32px;
+
+            font-weight: 700;
+
+            margin-bottom: 25px;
+        }
+
+        .chip{
+
+            display: inline-block;
+
+            padding:
+                12px 18px;
+
+            border-radius: 999px;
+
+            background:
+                rgba(116,192,255,0.12);
+
+            border:
+                1px solid rgba(116,192,255,0.25);
+
+            color: #9fd5ff;
+
+            margin:
+                8px 8px 0 0;
+
+            font-size: 14px;
+        }
+
+        .solusi{
+
+            color: rgba(255,255,255,0.82);
+
+            line-height: 2;
+
+            font-size: 17px;
+        }
+
+        .deskripsi{
+
+            color: rgba(255,255,255,0.82);
+
+            line-height: 2;
+
+            font-size: 17px;
+        }
+
+        .ranking-item{
+
+            background:
+                rgba(255,255,255,0.06);
+
+            border-radius: 22px;
+
+            padding: 20px;
+
+            margin-bottom: 18px;
+        }
+
+        .ranking-top{
+
+            display: flex;
+
+            justify-content: space-between;
+
+            margin-bottom: 12px;
+
+            color: white;
+
+            font-weight: 600;
+        }
+
+        .progress{
+
+            height: 12px;
+
+            border-radius: 999px;
+
+            background:
+                rgba(255,255,255,0.08);
+        }
+
+        .progress-bar{
+
+            border-radius: 999px;
+        }
+
+        .disclaimer{
+
+            margin-top: 35px;
+
+            padding: 22px;
+
+            border-radius: 20px;
+
+            background:
+                rgba(255,193,7,0.08);
+
+            border:
+                1px solid rgba(255,193,7,0.15);
+
+            color: #ffe28a;
+
+            line-height: 1.8;
+        }
+
+        @media(max-width:768px){
+
+            .title{
+                font-size: 38px;
+            }
+
+            .persen{
+                font-size: 55px;
+            }
+
+            .penyakit{
+                font-size: 30px;
+            }
+
+            .top-section{
+                padding: 30px;
+            }
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <div class="main-card">
+
+        <div class="top-section">
+
+            <div class="tag">
+
+                Sistem Pakar Analisis ISPA
 
             </div>
 
             <div class="title">
 
-                Hasil Diagnosis Penyakit
+                Hasil Diagnosa Penyakit ISPA
 
             </div>
 
             <div class="subtitle">
 
-                Analisis gejala menggunakan metode
-                Forward Chaining dan Certainty Factor.
+                Sistem menganalisis gejala menggunakan metode
+                Forward Chaining dan Certainty Factor untuk
+                menentukan kemungkinan penyakit berdasarkan
+                gejala yang dipilih pengguna.
 
             </div>
 
-            {{-- HASIL UTAMA --}}
-            <div class="result-card">
+            {{-- TOP HASIL --}}
 
-                <div class="diagnosa-icon">
+            <div class="prediction-grid">
 
-                    🩺
+                @foreach(array_slice($hasilDiagnosa,0,2) as $index => $hasil)
 
-                </div>
+                    <div class="prediction-card">
 
-                <div class="penyakit-name">
+                        <div class="ranking
+                            {{ $index == 0 ? 'rank-1' : 'rank-2' }}">
 
-                    {{ $hasilUtama['penyakit'] }}
+                            {{ $index + 1 }}
 
-                </div>
+                        </div>
 
-                <div class="persen">
+                        <div class="penyakit">
 
-                    {{ round($hasilUtama['persentase'], 2) }}%
+                            {{ $hasil['penyakit'] }}
 
-                </div>
+                        </div>
 
-                @php
+                        <div class="persen">
 
-                $persen = $hasilUtama['persentase'];
+                            {{ $hasil['persentase'] }}%
 
-                if($persen >= 80){
+                        </div>
 
-                    $status = 'Tingkat Keyakinan Sangat Tinggi';
-                    $badgeClass = 'high';
+                        @php
 
-                }elseif($persen >= 60){
+                            $status = 'Kemungkinan Rendah';
+                            $class = 'rendah';
 
-                    $status = 'Tingkat Keyakinan Tinggi';
-                    $badgeClass = 'medium';
+                            if($hasil['persentase'] >= 70){
 
-                }elseif($persen >= 40){
+                                $status = 'Kemungkinan Tinggi';
+                                $class = 'tinggi';
+                            }
 
-                    $status = 'Tingkat Keyakinan Sedang';
-                    $badgeClass = 'low';
+                            elseif($hasil['persentase'] >= 40){
 
-                }elseif($persen > 0){
+                                $status = 'Kemungkinan Sedang';
+                                $class = 'sedang';
+                            }
 
-                    $status = 'Tingkat Keyakinan Rendah';
-                    $badgeClass = 'very-low';
+                        @endphp
 
-                }else{
+                        <div class="status {{ $class }}">
 
-                    $status = 'Tidak Terdeteksi';
-                    $badgeClass = 'not-detected';
-                }
+                            {{ $status }}
 
-            @endphp
+                        </div>
 
-            <div class="status {{ $badgeClass }}">
+                    </div>
 
-                {{ $status }}
-
-            </div>
+                @endforeach
 
             </div>
 
-            {{-- GEJALA --}}
+            {{-- GEJALA USER --}}
+
             <div class="section-card">
 
                 <div class="section-title">
@@ -510,11 +507,11 @@
 
                 </div>
 
-                @foreach($detail as $detail)
+                @foreach($detail as $d)
 
-                    <div class="tag-gejala">
+                    <div class="chip">
 
-                        ✓ {{ $detail->gejala->nama_gejala }}
+                        ✓ {{ $d->gejala->nama_gejala }}
 
                     </div>
 
@@ -522,84 +519,123 @@
 
             </div>
 
-            {{-- SOLUSI --}}
+            {{-- DESKRIPSI PENYAKIT --}}
+
             <div class="section-card">
 
                 <div class="section-title">
 
-                    Solusi & Saran Penanganan
+                    Deskripsi Penyakit
 
                 </div>
 
-                <div class="solusi-box">
+                <div class="deskripsi">
 
-                    {!! nl2br(e($hasilUtama['solusi'])) !!}
+                    {!! nl2br(
+                        $hasilDiagnosa[0]['deskripsi']
+                        ??
+                        'Belum tersedia deskripsi penyakit.'
+                    ) !!}
+
+                </div>
+
+            </div>
+
+            {{-- SOLUSI --}}
+
+            <div class="section-card">
+
+                <div class="section-title">
+
+                    Saran Penanganan Awal
+
+                </div>
+
+                <div class="solusi">
+
+                    {!! nl2br(
+                        $hasilDiagnosa[0]['solusi']
+                        ??
+                        'Disarankan untuk beristirahat, menjaga pola makan, memperbanyak cairan, dan melakukan pemeriksaan lebih lanjut ke tenaga medis.'
+                    ) !!}
 
                 </div>
 
             </div>
 
             {{-- RANKING --}}
+
             <div class="section-card">
 
                 <div class="section-title">
 
-                    Kemungkinan Penyakit Lain
+                    Ranking Kemungkinan Penyakit
 
                 </div>
 
-                @foreach($hasilDiagnosa as $item)
+                @foreach($hasilDiagnosa as $hasil)
 
-                    <div class="ranking-card">
+                    @if($hasil['persentase'] > 0)
 
-                        <div class="ranking-top">
+                        <div class="ranking-item">
 
-                            <div class="ranking-name">
+                            <div class="ranking-top">
 
-                                {{ $item['penyakit'] }}
+                                <div>
+
+                                    {{ $hasil['penyakit'] }}
+
+                                </div>
+
+                                <div>
+
+                                    {{ $hasil['persentase'] }}%
+
+                                </div>
 
                             </div>
 
-                            <div class="ranking-percent">
+                            <div class="progress">
 
-                                {{ round($item['persentase'], 2) }}%
+                                <div class="progress-bar bg-info"
+                                     style="width: {{ $hasil['persentase'] }}%">
+
+                                </div>
 
                             </div>
 
                         </div>
 
-                        <div class="progress-modern">
-
-                            <div style="width:
-                                {{ $item['persentase'] }}%;
-                            "></div>
-
-                        </div>
-
-                    </div>
+                    @endif
 
                 @endforeach
 
             </div>
 
+            {{-- DISCLAIMER --}}
+
+            <div class="disclaimer">
+
+                <b>Disclaimer:</b>
+                Sistem ini hanya memberikan prediksi awal berdasarkan
+                gejala yang dipilih pengguna dan tidak menggantikan
+                diagnosis dokter atau tenaga medis profesional.
+
+            </div>
+
             {{-- BUTTON --}}
+
             <div class="mt-5 d-flex gap-3 flex-wrap justify-content-center">
 
                 <a href="/user"
-                   class="btn btn-primary btn-modern">
+                   class="btn btn-primary px-4 py-3 rounded-4 fw-semibold">
 
                     Diagnosa Ulang
 
                 </a>
 
-                <button class="btn btn-light btn-modern">
-
-                    Cetak PDF
-
-                </button>
-
                 <a href="/"
-                   class="btn btn-outline-light btn-modern">
+                   class="btn btn-outline-light px-4 py-3 rounded-4 fw-semibold">
 
                     Kembali Home
 
@@ -611,6 +647,6 @@
 
     </div>
 
-</div>
+</body>
 
-@endsection
+</html>

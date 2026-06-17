@@ -369,12 +369,14 @@
 
                             </a>
 
-                            <a href="/admin"
-                               class="btn btn-light btn-modern">
+                            <button
+                                class="btn btn-light btn-modern"
+                                data-bs-toggle="modal"
+                                data-bs-target="#loginModal">
 
                                 Admin Panel
 
-                            </a>
+                            </button>
 
                         </div>
 
@@ -402,6 +404,110 @@
 
     </div>
 
+    <!-- MODAL LOGIN -->
+
+    <div class="modal fade"
+        id="loginModal"
+        tabindex="-1">
+
+        <div class="modal-dialog modal-dialog-centered">
+
+            <div class="modal-content"
+                style="
+                    background:#111827;
+                    border-radius:24px;
+                    color:white;
+                ">
+
+                <div class="modal-header border-secondary">
+
+                    <h5 class="modal-title">
+
+                        Login Admin
+
+                    </h5>
+
+                    <button
+                        type="button"
+                        class="btn-close btn-close-white"
+                        data-bs-dismiss="modal">
+
+                    </button>
+
+                </div>
+
+                <form action="/login"
+                    method="POST">
+
+                    @csrf
+
+                    <div class="modal-body">
+
+                        @if(session('error'))
+
+                            <div class="alert alert-danger">
+
+                                {{ session('error') }}
+
+                            </div>
+
+                        @endif
+
+                        <div class="mb-3">
+
+                            <label class="mb-2">
+
+                                Username
+
+                            </label>
+
+                            <input
+                                type="text"
+                                name="username"
+                                class="form-control"
+                                required>
+
+                        </div>
+
+                        <div class="mb-3">
+
+                            <label class="mb-2">
+
+                                Password
+
+                            </label>
+
+                            <input
+                                type="password"
+                                name="password"
+                                class="form-control"
+                                required>
+
+                        </div>
+
+                    </div>
+
+                    <div class="modal-footer border-secondary">
+
+                        <button
+                            type="submit"
+                            class="btn btn-primary">
+
+                            Login
+
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>

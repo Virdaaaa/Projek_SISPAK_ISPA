@@ -4,39 +4,103 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\Models\Admin;
+use Illuminate\Support\Facades\Hash;
+
 class AdminController extends Controller
 {
+    /*
+    |--------------------------------------------------------------------------
+    | FORM LOGIN
+    |--------------------------------------------------------------------------
+    */
+
     public function loginForm()
     {
-        return view('admin.login');
+        return view('auth.login');
     }
+
+    /*
+    |--------------------------------------------------------------------------
+    | PROSES LOGIN
+    |--------------------------------------------------------------------------
+    */
 
     public function login(Request $request)
     {
-        if (
-            $request->username == 'admin' &&
-            $request->password == 'admin123'
-        ) {
+        $admin = Admin::where(
+            'username',
+            $request->username
+        )->first();
 
-            session([
-                'admin_id' => 1,
-                'admin_nama' => 'Administrator'
-            ]);
+        if (!$admin) {
 
-            return redirect('/admin/dashboard');
+            return back()->with(
+                'error',
+                'Username tidak ditemukan'
+            );
         }
 
-        return back()
-            ->with('error', 'Username atau Password salah');
+        if ($request->password != $admin->password) {
+
+            return back()->with(
+                'error',
+                'Password salah'
+            );
+        }
+
+        session([
+
+            'admin_id' => $admin->id,
+
+            'admin_nama' => $admin->nama
+        ]);
+
+        return redirect('/admin');
     }
+
+    /*
+    |--------------------------------------------------------------------------
+    | DASHBOARD
+    |--------------------------------------------------------------------------
+    */
+
+    public function index()
+    {
+        if (!session()->has('admin_id')) {
+
+            return redirect('/');
+        }
+
+        $totalPenyakit = \App\Models\Penyakit::count();
+
+        $totalGejala = \App\Models\Gejala::count();
+
+        $totalRule = \App\Models\Rule::count();
+
+        $totalKonsultasi = \App\Models\Konsultasi::count();
+
+        return view(
+            'admin.dashboard',
+            compact(
+                'totalPenyakit',
+                'totalGejala',
+                'totalRule',
+                'totalKonsultasi'
+            )
+        );
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | LOGOUT
+    |--------------------------------------------------------------------------
+    */
 
     public function logout()
     {
-        session()->forget([
-            'admin_id',
-            'admin_nama'
-        ]);
+        session()->flush();
+
 
         return redirect('/');
-    }
-}
+    }}

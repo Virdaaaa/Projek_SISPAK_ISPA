@@ -9,9 +9,16 @@ class Rule extends Model
     protected $table = 'rules';
 
     protected $fillable = [
+
         'penyakit_id',
         'gejala_id',
-        'bobot'
+        'bobot',
+        'is_gejala_inti'
+    ];
+
+    protected $casts = [
+
+        'is_gejala_inti' => 'boolean'
     ];
 
     public function penyakit()
